@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main>
+
+    <!--/*@thymesVar id="message" type="java.lang.String"*/-->
+    <h1 th:if="${message != null}" th:text="${message}"></h1>
+    <!--/*@thymesVar id="memoGroups" type="java.util.List<com.example.memoapp.model.MemoGroup>"*/-->
+    <dl th:each="memoGroup : ${memoGroups}" class="Bd P(10px)">
+        <!--/*@thymesVar id="description" type=""*/-->
+        <dt th:text="${memoGroup.description}">...</dt>
+        <dd>
+            <ul class="P(0)">
+                <li th:each="step : ${memoGroup.steps}"
+                    th:text="|${step.description} (${step.daysToDeadline} dni)|"></li>
+            </ul>
+            <form action="#" method="post" th:action="@{/memogroups/{memoGroupId}(memoGroupId=${memoGroup.id})}">
+                <label>Deadline
+                    <input name="deadline" type="datetime-local" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}">
+                </label>
+                <button type="submit">Dodaj deadline >></button>
+            </form>
+        </dd>
+    </dl>
+
+</main>
+</body>
+</html>
